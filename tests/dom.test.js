@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Window } from 'happy-dom';
-import { STORAGE_KEY, freshGame, startGame, nextPlayer, missionFor } from '../game.js';
+import { MISSIONS, STORAGE_KEY, freshGame, startGame, nextPlayer, missionFor } from '../game.js';
 
 const html = (await readFile(new URL('../index.html', import.meta.url), 'utf8')).replace(/<script[^>]*>[\s\S]*?<\/script>/g, '').replace(/<link[^>]*>/g, '');
 let sequence = 0;
@@ -27,6 +27,32 @@ function fixture() {
   return { ...freshGame(), pin: '2468', players: ['Mamie', 'Lou', 'Papa'].map((name, i) => ({ id: `p${i}`, name, kind: ['woman', 'girl', 'man'][i], hair: '#57392d', shirt: '#a7b5d9', skin: '#e7ac83', bald: false, alive: true })) };
 }
 function playingFixture() { let game = startGame(fixture()); while (game.phase === 'distribution') game = nextPlayer(game); return game; }
+
+test('le catalogue annonce et affiche les soixante missions', async () => {
+  const ui = await mount();
+  assert.match(ui.$('[data-action="mission-list"]').textContent, /60 missions/);
+  ui.click('[data-action="mission-list"]');
+  assert.match(ui.$('#modal-title').textContent, /60 façons/);
+  assert.equal(ui.window.document.querySelectorAll('.mission-catalog > div').length, 60);
+  for (const mission of MISSIONS) assert.ok(ui.$('.mission-catalog').textContent.includes(mission.short));
+});
+
+test('les nouveaux types de missions se révèlent, s’illustrent et se lisent avec le nom de la cible', async () => {
+  for (const missionId of ['word-banana', 'animal-dog', 'gesture-ears', 'move-robot', 'rhythm-knees', 'give-book', 'carry-spoon']) {
+    const initial = playingFixture();
+    initial.assignments.p0.missionId = missionId;
+    const info = missionFor(initial, 'p0');
+    const ui = await mount(initial);
+    ui.click('[data-action="open-player"][data-id="p0"]');
+    ui.click('[data-action="reveal"]');
+    assert.equal(ui.$('.mission-instruction').textContent, info.text);
+    assert.equal(ui.$('.mission-art').getAttribute('aria-label'), `${info.target.name} : ${info.mission.short}`);
+    assert.ok(!ui.$('.mission-art').innerHTML.includes('undefined'));
+    ui.click('[data-action="speak"]');
+    assert.ok(ui.spoken.at(-1).includes(info.text));
+    assert.deepEqual(ui.saved(), initial);
+  }
+});
 
 test('l’éditeur crée, modifie et retire des avatars ; un prénom HTML reste du texte', async () => {
   const ui = await mount();

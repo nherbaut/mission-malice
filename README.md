@@ -2,10 +2,12 @@
 
 Le jeu des petits et grands malins : un jeu familial de missions secrètes, dès 4 ans, sur un seul téléphone. Site statique en français, sans compte, serveur applicatif ni dépendance JavaScript à l’exécution.
 
+Le catalogue contient **60 missions** : mots à faire dire, cris d’animaux, chansons, gestes, imitations et petits services avec des objets du quotidien. Chaque mission possède une consigne audio et une illustration. Les nouvelles missions sont proposées dans les prochaines parties ; les missions d’une partie déjà enregistrée sont conservées.
+
 ## Jouer
 
 1. Ajouter les joueurs, y compris l’administrateur. Choisir leur personnage (femme, homme, fille, garçon), leurs cheveux, leur t-shirt, leur peau et leur prénom. Les silhouettes portent une jupe, un pantalon ou un short.
-2. Lancer la distribution et choisir un code administrateur de 4 à 8 chiffres. Les joueurs forment une boucle aléatoire unique ; chacun reçoit une cible et une des 10 missions.
+2. Lancer la distribution et choisir un code administrateur de 4 à 8 chiffres. Les joueurs forment une boucle aléatoire unique ; chacun reçoit une cible et une des 60 missions.
 3. Passer le téléphone au joueur dont l’avatar et le prénom sont affichés. Un tap révèle sa cible et sa mission illustrée. Le bouton haut-parleur lit la consigne sans changer d’écran. Un autre tap masque la mission et affiche le joueur suivant.
 4. Après la distribution, chaque joueur peut revoir sa mission autant de fois qu’il le souhaite, sans code administrateur : toucher **👀 Revoir ma mission** en haut de l’écran, choisir son avatar, puis tapoter pour révéler la mission. Le bouton 🔊 permet de la réécouter. Un nouveau tap la masque et revient aux avatars. Ce parcours reste disponible après fermeture et réouverture du navigateur et affiche toujours la mission actuelle, y compris après une élimination. Lorsqu’une cible a réalisé l’action, le joueur touche « Ma cible a réussi l’action ! » et les deux participants confirment. La cible est éliminée ; sa mission et sa cible sont transmises au joueur qui l’a attrapée.
 5. Le dernier joueur en jeu gagne. Il n’y a pas de clôture automatique à une heure donnée ni de départage automatique si plusieurs personnes restent en jeu à la fin de la journée.

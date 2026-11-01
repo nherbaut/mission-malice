@@ -23,6 +23,80 @@
   border-color: var(--yellow);
   min-height: 44px;
 }
+
+/* Repères visuels des mots, imitations, gestes et objets du catalogue. */
+.visual-word .speech-bubble,
+.visual-animal .speech-bubble {
+  max-width: 150px;
+  font-size: 48px;
+}
+.visual-word .speech-bubble small,
+.visual-animal .speech-bubble small {
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.visual-symbol {
+  top: 20px;
+  right: 12px;
+  font-size: 45px;
+  line-height: 1.2;
+}
+.visual-caption {
+  left: 14px;
+  top: 15px;
+  max-width: 170px;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 750;
+  transform: rotate(-5deg);
+}
+.song-notes {
+  top: 87px;
+  right: 12px;
+  font-size: 36px;
+  transform: rotate(12deg);
+}
+.object-action {
+  bottom: 46px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 15px;
+  padding: 9px;
+  background: #fffdf5ed;
+  box-shadow: 0 3px 0 #34382b14;
+}
+.mission-object,
+.destination-hands,
+.destination-chair {
+  font-size: 38px;
+  line-height: 1.2;
+}
+.object-arrow {
+  font-size: 27px;
+}
+.destination-table {
+  width: 48px;
+  height: 43px;
+}
+.pose-turn .scene-person {
+  transform: rotate(-12deg);
+}
+.pose-turn .visual-caption,
+.pose-wings .visual-caption {
+  top: 54px;
+  font-size: 40px;
+}
+.pose-tiptoe .visual-caption,
+.pose-penguin .visual-caption,
+.pose-march .visual-caption {
+  top: auto;
+  bottom: 18px;
+  left: 12px;
+  font-size: 27px;
+}
 @media (max-width: 600px) {
   .header-actions {
     max-width: 190px;

@@ -1,16 +1,42 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { MISSIONS, STORAGE_KEY, freshGame, startGame, nextPlayer, eliminate, missionFor, readGame, validateState } from '../game.js';
+import { missionArt } from '../art.js';
 
 export function roster(count = 6) {
   return { ...freshGame(), pin: '2468', players: Array.from({ length: count }, (_, i) => ({ id: `p${i}`, name: `Joueur ${i + 1}`, kind: ['woman', 'man', 'girl', 'boy'][i % 4], hair: '#57392d', shirt: '#a7b5d9', skin: '#e7ac83', bald: false, alive: true })) };
 }
 const playing = state => { while (state.phase === 'distribution') state = nextPlayer(state); return state; };
 
-test('les dix missions sont distinctes et disposent de consignes et de repères visuels', () => {
-  assert.equal(MISSIONS.length, 10);
-  assert.equal(new Set(MISSIONS.map(m => m.id)).size, 10);
+test('les soixante missions sont distinctes et disposent de consignes et de repères visuels', () => {
+  assert.equal(MISSIONS.length, 60);
+  assert.equal(new Set(MISSIONS.map(m => m.id)).size, 60);
+  assert.equal(new Set(MISSIONS.map(m => m.text)).size, 60);
   for (const m of MISSIONS) { assert.ok(m.text.includes('{name}')); assert.ok(m.emoji); assert.ok(m.color); }
+});
+
+test('les cinquante nouvelles missions ont une illustration complète avec l’avatar de la cible', () => {
+  const target = roster().players[0];
+  for (const mission of MISSIONS.slice(10)) {
+    assert.ok(mission.visual.type);
+    assert.ok(mission.visual.symbol);
+    const art = missionArt(mission, target);
+    assert.ok(art.includes(target.name));
+    assert.ok(art.includes(mission.visual.symbol));
+    assert.ok(art.includes(`pose-${mission.visual.pose}`));
+    assert.ok(!art.includes('undefined'));
+    assert.ok(!art.includes('null'));
+  }
+});
+
+test('les dix missions historiques restent lisibles dans les sauvegardes existantes', () => {
+  const ids = ['word', 'cat', 'sing', 'clap', 'arms', 'nose', 'jump', 'dance', 'spoon', 'water'];
+  for (const missionId of ids) {
+    const state = playing(startGame(roster(2)));
+    state.assignments.p0.missionId = missionId;
+    const restored = readGame({ getItem: () => JSON.stringify(state) });
+    assert.equal(missionFor(restored, 'p0').mission.id, missionId);
+  }
 });
 
 test('le lancement requiert au moins deux joueurs et un code', () => {
@@ -20,15 +46,15 @@ test('le lancement requiert au moins deux joueurs et un code', () => {
   assert.equal(startGame(roster(2)).phase, 'distribution');
 });
 
-test('chaque attribution forme une boucle unique sans auto-cible, même avec plus de dix joueurs', () => {
-  for (let count = 2; count <= 40; count++) {
+test('chaque attribution forme une boucle unique sans auto-cible, même avec plus de soixante joueurs', () => {
+  for (let count = 2; count <= 70; count++) {
     for (let sample = 0; sample < 10; sample++) {
       const state = startGame(roster(count));
       assert.ok(validateState(state));
       const targets = Object.values(state.assignments).map(a => a.targetId);
       assert.equal(new Set(targets).size, count);
       for (const [id, a] of Object.entries(state.assignments)) assert.notEqual(id, a.targetId);
-      if (count <= 10) assert.equal(new Set(Object.values(state.assignments).map(a => a.missionId)).size, count);
+      if (count <= MISSIONS.length) assert.equal(new Set(Object.values(state.assignments).map(a => a.missionId)).size, count);
     }
   }
 });
