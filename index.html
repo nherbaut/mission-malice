@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f9f6ee">
+    <meta name="description" content="Des missions secrètes, des petits malins et toute la famille. Un jeu à partager sur un seul téléphone, dès 4 ans.">
+    <title>Mission Malice · Le jeu des petits et grands malins</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Mission Malice, accueil"><span class="brand-symbol" aria-hidden="true">✳</span><span>mission<span class="brand-second">malice<span class="brand-dot">.</span></span></span></a>
+      <button class="admin-trigger" id="admin-trigger" type="button"><span aria-hidden="true">⚙</span> <span>Coin des grands</span></button>
+    </header>
+    <main id="app" tabindex="-1"></main>
+    <footer class="site-footer"><span>Petites missions. Grands moments.</span><span>Un téléphone, toute la famille <span aria-hidden="true">♡</span></span></footer>
+    <dialog id="modal" aria-labelledby="modal-title"></dialog>
+    <div id="toast" class="toast" role="status"></div>
+    <noscript>Active JavaScript pour jouer à Mission Malice. Le jeu fonctionne entièrement dans ce navigateur.</noscript>
+  </body>
+</html>
