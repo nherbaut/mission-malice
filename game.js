@@ -1,5 +1,15 @@
 export const STORAGE_KEY = 'mission-malice.v1';
 
+export const AVATAR_DEFAULTS = { bottom: '#586b8d', accessory: 'none' };
+export const ACCESSORIES = [
+  { id: 'none', label: 'Sans accessoire', icon: '∅' },
+  { id: 'glasses', label: 'Lunettes', icon: '👓' },
+  { id: 'sunglasses', label: 'Lunettes de soleil', icon: '🕶️' },
+  { id: 'hat', label: 'Chapeau', icon: '🎩' },
+  { id: 'cap', label: 'Casquette', icon: '🧢' },
+  { id: 'bow', label: 'Nœud', icon: '🎀' }
+];
+
 const additionalMission = (id, title, text, short, emoji, type, caption = '', pose = 'normal') => ({
   id, title, text, short, emoji,
   color: { word: '#f6c6d3', animal: '#f9d867', gesture: '#c6decb', move: '#bcd9ed', rhythm: '#ccc5ee', give: '#fac6a9', carry: '#bcd9ed' }[type],
@@ -137,6 +147,8 @@ export function validateState(value) {
   const ids = new Set();
   for (const p of value.players) {
     if (!p || typeof p.id !== 'string' || ids.has(p.id) || typeof p.name !== 'string' || !p.name.trim() || p.name.length > 24 || !['woman', 'man', 'girl', 'boy'].includes(p.kind) || !/^#[a-f\d]{6}$/i.test(p.hair) || !/^#[a-f\d]{6}$/i.test(p.shirt) || !/^#[a-f\d]{6}$/i.test(p.skin) || typeof p.bald !== 'boolean' || typeof p.alive !== 'boolean') return false;
+    if (p.bottom !== undefined && !/^#[a-f\d]{6}$/i.test(p.bottom)) return false;
+    if (p.accessory !== undefined && !ACCESSORIES.some(accessory => accessory.id === p.accessory)) return false;
     ids.add(p.id);
   }
   for (const event of value.events) {

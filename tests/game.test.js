@@ -129,4 +129,22 @@ test('le validateur rejette les boucles cassées, les doublons et les attributs 
   assert.equal(validateState(duplicate), false);
   const avatar = roster(); avatar.players[0].hair = 'red';
   assert.equal(validateState(avatar), false);
+  const bottom = roster(); bottom.players[0].bottom = 'pink';
+  assert.equal(validateState(bottom), false);
+  const accessory = roster(); accessory.players[0].accessory = 'inconnu';
+  assert.equal(validateState(accessory), false);
+});
+
+test('les détails de l’avatar restent valides pendant les missions et après une élimination', () => {
+  let state = roster(3);
+  state.players[0] = { ...state.players[0], bottom: '#e7a0af', accessory: 'hat' };
+  state = playing(startGame(state));
+  assert.ok(validateState(state));
+  state = eliminate(state, 'p0');
+  const restored = readGame({ getItem: () => JSON.stringify(state) });
+  assert.equal(restored.players[0].bottom, '#e7a0af');
+  assert.equal(restored.players[0].accessory, 'hat');
+  const art = missionArt(MISSIONS[0], restored.players[0]);
+  assert.ok(art.includes('fill="#e7a0af"'));
+  assert.ok(art.includes('data-accessory="hat"'));
 });

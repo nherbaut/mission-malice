@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Window } from 'happy-dom';
-import { MISSIONS, STORAGE_KEY, freshGame, startGame, nextPlayer, missionFor } from '../game.js';
+import { MISSIONS, STORAGE_KEY, AVATAR_DEFAULTS, ACCESSORIES, freshGame, startGame, nextPlayer, missionFor } from '../game.js';
 
 const html = (await readFile(new URL('../index.html', import.meta.url), 'utf8')).replace(/<script[^>]*>[\s\S]*?<\/script>/g, '').replace(/<link[^>]*>/g, '');
 let sequence = 0;
@@ -73,6 +73,53 @@ test('l’éditeur crée, modifie et retire des avatars ; un prénom HTML reste 
   ui.click('[data-action="edit-player"]');
   ui.click('[data-action="delete-player"]');
   assert.equal(ui.saved().players.length, 0);
+});
+
+test('la couleur du bas se modifie et persiste pour les jupes, pantalons et shorts des anciens avatars', async () => {
+  for (const kind of ['woman', 'man', 'girl', 'boy']) {
+    const oldGame = fixture();
+    oldGame.players = [{ ...oldGame.players[0], kind }];
+    const ui = await mount(oldGame);
+    assert.equal(ui.$('.player-card [data-avatar-part="bottom"]').getAttribute('fill'), AVATAR_DEFAULTS.bottom);
+    assert.equal(ui.$('.player-card .avatar-accessory'), null);
+    ui.click('[data-action="edit-player"]');
+    assert.equal(ui.$('input[name="bottom"]:checked').value, AVATAR_DEFAULTS.bottom);
+    assert.equal(ui.$('input[name="accessory"]:checked').value, 'none');
+    ui.click('input[name="bottom"][value="#e7a0af"]');
+    ui.click('input[name="accessory"][value="glasses"]');
+    assert.equal(ui.$('#avatar-preview [data-avatar-part="bottom"]').getAttribute('fill'), '#e7a0af');
+    assert.ok(ui.$('#avatar-preview [data-accessory="glasses"]'));
+    ui.submit('#avatar-form');
+    assert.equal(ui.saved().players[0].bottom, '#e7a0af');
+    assert.equal(ui.saved().players[0].accessory, 'glasses');
+    const resumed = await mount(ui.saved());
+    assert.equal(resumed.$('.player-card [data-avatar-part="bottom"]').getAttribute('fill'), '#e7a0af');
+    assert.ok(resumed.$('.player-card [data-accessory="glasses"]'));
+    resumed.click('[data-action="edit-player"]');
+    assert.equal(resumed.$('input[name="bottom"]:checked').value, '#e7a0af');
+    assert.equal(resumed.$('input[name="accessory"]:checked').value, 'glasses');
+  }
+});
+
+test('chaque accessoire est visible immédiatement, sauvegardé et peut être retiré', async () => {
+  const ui = await mount();
+  ui.click('[data-action="add-player"]');
+  ui.input('#player-name', 'Lou');
+  for (const { id } of ACCESSORIES) {
+    ui.click(`input[name="accessory"][value="${id}"]`);
+    if (id === 'none') assert.equal(ui.$('#avatar-preview .avatar-accessory'), null);
+    else assert.ok(ui.$(`#avatar-preview [data-accessory="${id}"]`));
+  }
+  ui.submit('#avatar-form');
+  assert.equal(ui.saved().players[0].accessory, 'bow');
+  const resumed = await mount(ui.saved());
+  assert.ok(resumed.$('.player-card [data-accessory="bow"]'));
+  resumed.click('[data-action="edit-player"]');
+  resumed.click('input[name="accessory"][value="none"]');
+  assert.equal(resumed.$('#avatar-preview .avatar-accessory'), null);
+  resumed.submit('#avatar-form');
+  assert.equal(resumed.saved().players[0].accessory, 'none');
+  assert.equal(resumed.$('.player-card .avatar-accessory'), null);
 });
 
 test('le lancement crée le code puis distribue les missions par deux taps ; l’audio ne fait pas avancer', async () => {

@@ -81,6 +81,47 @@
   width: 48px;
   height: 43px;
 }
+.accessory-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.accessory-choices > label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 76px;
+  padding: 8px 5px;
+  border: 1px solid #dedbcf;
+  border-radius: 10px;
+  background: #fdfbf5;
+  cursor: pointer;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.accessory-icon {
+  font-size: 28px;
+  line-height: 1.2;
+}
+.accessory-choices input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.accessory-choices > label:has(input:checked) {
+  border-color: var(--ink);
+  background: #ede8d6;
+  box-shadow: 0 0 0 1px var(--ink);
+}
+.accessory-choices > label:has(input:focus-visible) {
+  outline: 3px solid #7274ac;
+  outline-offset: 3px;
+}
 .pose-turn .scene-person {
   transform: rotate(-12deg);
 }

@@ -1,9 +1,21 @@
+import { AVATAR_DEFAULTS } from './game.js';
+
 export const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+
+const accessoryDrawings = {
+  glasses: '<g fill="none" stroke="#34382b" stroke-width="3"><circle cx="75" cy="66" r="12"/><circle cx="105" cy="66" r="12"/><path d="M87 65Q90 62 93 65 M63 63L57 59 M117 63L123 59"/></g>',
+  sunglasses: '<g fill="#34382b" stroke="#34382b" stroke-width="3"><rect x="61" y="57" width="27" height="19" rx="7"/><rect x="92" y="57" width="27" height="19" rx="7"/><path d="M88 62H92 M61 61L56 58 M119 61L124 58"/></g><path d="M67 61L72 65 M98 61L103 65" stroke="#fffdf5" stroke-width="2" opacity=".6"/>',
+  hat: '<path d="M68 29L64 5H116L112 29Z" fill="#34382b"/><path d="M67 20H113V29H67Z" fill="#e58b54"/><ellipse cx="90" cy="30" rx="40" ry="6" fill="#34382b"/>',
+  cap: '<path d="M57 35Q58 8 90 8Q121 8 123 35Z" fill="#527b8b"/><path d="M90 9Q103 15 104 34" fill="none" stroke="#396071" stroke-width="2"/><path d="M85 34Q117 29 140 38Q122 46 98 39Z" fill="#396071"/><circle cx="90" cy="9" r="3" fill="#396071"/>',
+  bow: '<path d="M111 24Q87 4 91 29Q89 43 111 30 M115 24Q137 4 135 29Q137 44 115 30" fill="#cb6b88" stroke="#a14e6a" stroke-width="2"/><circle cx="113" cy="27" r="6" fill="#e5a0b8"/>'
+};
 
 export function avatar(player, className = '', pose = 'normal') {
   const child = ['girl', 'boy'].includes(player.kind);
   const skirt = ['woman', 'girl'].includes(player.kind);
   const hair = escapeHTML(player.hair), shirt = escapeHTML(player.shirt), skin = escapeHTML(player.skin);
+  const bottom = escapeHTML(player.bottom ?? AVATAR_DEFAULTS.bottom);
+  const accessory = player.accessory ?? AVATAR_DEFAULTS.accessory;
   const armPath = {
     arms: 'M60 112 Q38 96 40 66 M120 112 Q142 96 140 66',
     clap: 'M60 112 Q45 130 83 119 M120 112 Q135 130 97 119',
@@ -32,7 +44,7 @@ export function avatar(player, className = '', pose = 'normal') {
     ${!player.bald && skirt ? `<path d="M56 55 Q51 17 90 17 Q130 17 125 57 L132 101 Q112 117 51 99Z" fill="${hair}"/>` : ''}
     <path d="${legs}" stroke="${skin}" stroke-width="15" stroke-linecap="round" fill="none"/>
     <path d="${feet}" stroke="#38433a" stroke-width="12" stroke-linecap="round"/>
-    ${skirt ? '<path d="M68 134 L112 134 L124 161 Q90 171 56 161Z" fill="#586b8d"/>' : `<path d="M63 134 H117 V${child ? '159' : '179'} H96 V151 H84 V${child ? '159' : '179'} H63Z" fill="#586b8d"/>`}
+    ${skirt ? `<path data-avatar-part="bottom" d="M68 134 L112 134 L124 161 Q90 171 56 161Z" fill="${bottom}"/>` : `<path data-avatar-part="bottom" d="M63 134 H117 V${child ? '159' : '179'} H96 V151 H84 V${child ? '159' : '179'} H63Z" fill="${bottom}"/>`}
     <path d="${armPath}" fill="none" stroke="${skin}" stroke-width="13" stroke-linecap="round"/>
     <path d="M69 102 Q90 96 111 102 L124 118 L111 126 L110 144 H70 L69 126 L56 118Z" fill="${shirt}"/>
     <path d="M83 92 V103 Q90 111 97 103 V92" fill="${skin}"/>
@@ -42,6 +54,7 @@ export function avatar(player, className = '', pose = 'normal') {
     <path d="M76 65 V68 M104 65 V68" stroke="#34382b" stroke-width="4" stroke-linecap="round"/>
     <path d="M81 81 Q90 89 99 81" fill="none" stroke="#7c493b" stroke-width="3" stroke-linecap="round"/>
     <ellipse cx="69" cy="77" rx="6" ry="3" fill="#e68f7e" opacity=".4"/><ellipse cx="111" cy="77" rx="6" ry="3" fill="#e68f7e" opacity=".4"/>
+    ${Object.hasOwn(accessoryDrawings, accessory) ? `<g class="avatar-accessory" data-accessory="${escapeHTML(accessory)}">${accessoryDrawings[accessory]}</g>` : ''}
     ${hands.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${skin}"/>`).join('')}
     </g></svg>`;
 }

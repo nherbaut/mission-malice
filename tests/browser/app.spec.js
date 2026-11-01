@@ -85,13 +85,17 @@ test('l’éditeur persiste ses couleurs et affiche les noms comme du texte', as
   await expect(page.locator('.player-name')).toHaveText('<b>Lou</b>');
   await expect(page.locator('.player-name b')).toHaveCount(0);
   await page.locator('.player-card').click();
-  await page.getByRole('radio', { name: 'Roux', exact: true }).check();
-  await page.getByRole('radio', { name: 'Vert', exact: true }).check();
+  await page.getByRole('group', { name: 'Les cheveux', exact: true }).getByRole('radio', { name: 'Roux', exact: true }).check();
+  await page.getByRole('group', { name: 'Le t-shirt', exact: true }).getByRole('radio', { name: 'Vert', exact: true }).check();
+  await page.getByRole('group', { name: 'Le vêtement du bas', exact: true }).getByRole('radio', { name: 'Rose', exact: true }).check();
+  await page.getByRole('radio', { name: 'Casquette', exact: true }).check();
   await page.getByLabel('Sans cheveux').check();
   await page.getByRole('button', { name: 'Enregistrer', exact: true }).click();
   await page.reload();
   const data = await saved(page);
-  expect(data.players[0]).toMatchObject({ kind: 'boy', hair: '#b85d36', shirt: '#a1bd91', bald: true });
+  expect(data.players[0]).toMatchObject({ kind: 'boy', hair: '#b85d36', shirt: '#a1bd91', bottom: '#e7a0af', accessory: 'cap', bald: true });
+  await expect(page.locator('.player-card [data-avatar-part="bottom"]')).toHaveAttribute('fill', '#e7a0af');
+  await expect(page.locator('.player-card [data-accessory="cap"]')).toHaveCount(1);
   await expect(page.locator('.player-name')).toHaveText('<b>Lou</b>');
 });
 
