@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Window } from 'happy-dom';
-import { STORAGE_KEY, freshGame, startGame, nextPlayer } from '../game.js';
+import { STORAGE_KEY, freshGame, startGame, nextPlayer, missionFor } from '../game.js';
 
 const html = (await readFile(new URL('../index.html', import.meta.url), 'utf8')).replace(/<script[^>]*>[\s\S]*?<\/script>/g, '').replace(/<link[^>]*>/g, '');
 let sequence = 0;
@@ -80,6 +80,36 @@ test('une mission révélée reprend masquée après rechargement', async () => 
   assert.equal(resumed.$('.cover-surface h1').textContent, 'Mamie');
 });
 
+test('chaque joueur peut revoir et réécouter sa mission sans code, sans la modifier, même après réouverture', async () => {
+  const initial = playingFixture();
+  const ui = await mount(initial);
+  assert.equal(ui.$('#missions-trigger').hidden, false);
+  for (const id of ['p0', 'p1', 'p0']) {
+    ui.click('#missions-trigger');
+    assert.equal(ui.$('#modal').open, false);
+    assert.equal(ui.$('.mission-instruction'), null);
+    ui.click(`[data-action="open-player"][data-id="${id}"]`);
+    assert.equal(ui.$('.mission-instruction'), null);
+    ui.click('[data-action="reveal"]');
+    const info = missionFor(initial, id);
+    assert.equal(ui.$('.mission-instruction').textContent, info.text);
+    assert.equal(ui.$('.target-chip strong').textContent, info.target.name);
+    ui.click('[data-action="speak"]');
+    assert.ok(ui.spoken.at(-1).includes(info.text));
+    ui.click('.mission-instruction');
+    assert.equal(ui.$('.mission-instruction'), null);
+    assert.equal(ui.window.document.querySelectorAll('.player-card').length, 3);
+    assert.deepEqual(ui.saved(), initial);
+  }
+  const resumed = await mount(ui.saved());
+  resumed.click('#missions-trigger');
+  resumed.click('[data-action="open-player"][data-id="p0"]');
+  resumed.click('[data-action="reveal"]');
+  assert.equal(resumed.$('.mission-instruction').textContent, missionFor(initial, 'p0').text);
+  resumed.click('#missions-trigger');
+  assert.equal(resumed.$('.mission-instruction'), null);
+});
+
 test('une élimination transmet la mission, la suivante termine la partie et le gagnant persiste', async () => {
   const initial = playingFixture();
   const ui = await mount(initial);
@@ -91,6 +121,7 @@ test('une élimination transmet la mission, la suivante termine la partie et le 
   assert.deepEqual(ui.saved().assignments.p0, inherited);
   assert.equal(ui.$('.cover-surface h1').textContent, 'Mamie');
   ui.click('[data-action="reveal"]');
+  assert.equal(ui.$('.mission-instruction').textContent, missionFor(ui.saved(), 'p0').text);
   ui.click('[data-action="claim"]');
   ui.click('[data-action="confirm-claim"]');
   assert.equal(ui.saved().phase, 'finished');

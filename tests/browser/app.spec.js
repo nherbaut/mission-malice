@@ -54,7 +54,7 @@ test('parcours familial complet : avatars, code, distribution, audio, transmissi
   const actor = before.players[0];
   const victimId = before.assignments[actor.id].targetId;
   const inherited = before.assignments[victimId];
-  await page.getByRole('button', { name: new RegExp(`${actor.name}.*Voir ma mission`) }).click();
+  await page.getByRole('button', { name: new RegExp(`${actor.name}.*Revoir ma mission`) }).click();
   await page.locator('.cover-surface').click();
   await page.getByRole('button', { name: /Ma cible a réussi/ }).click();
   await page.getByRole('button', { name: /Oui, on confirme/ }).click();

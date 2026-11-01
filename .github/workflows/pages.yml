@@ -2,7 +2,7 @@ name: Publier Mission Malice sur GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:

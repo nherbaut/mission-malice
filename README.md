@@ -7,7 +7,7 @@ Le jeu des petits et grands malins : un jeu familial de missions secrètes, dès
 1. Ajouter les joueurs, y compris l’administrateur. Choisir leur personnage (femme, homme, fille, garçon), leurs cheveux, leur t-shirt, leur peau et leur prénom. Les silhouettes portent une jupe, un pantalon ou un short.
 2. Lancer la distribution et choisir un code administrateur de 4 à 8 chiffres. Les joueurs forment une boucle aléatoire unique ; chacun reçoit une cible et une des 10 missions.
 3. Passer le téléphone au joueur dont l’avatar et le prénom sont affichés. Un tap révèle sa cible et sa mission illustrée. Le bouton haut-parleur lit la consigne sans changer d’écran. Un autre tap masque la mission et affiche le joueur suivant.
-4. Après la distribution, sélectionner son avatar pour revoir sa mission. Lorsqu’une cible a réalisé l’action, le joueur touche « Ma cible a réussi l’action ! » et les deux participants confirment. La cible est éliminée ; sa mission et sa cible sont transmises au joueur qui l’a attrapée.
+4. Après la distribution, chaque joueur peut revoir sa mission autant de fois qu’il le souhaite, sans code administrateur : toucher **👀 Revoir ma mission** en haut de l’écran, choisir son avatar, puis tapoter pour révéler la mission. Le bouton 🔊 permet de la réécouter. Un nouveau tap la masque et revient aux avatars. Ce parcours reste disponible après fermeture et réouverture du navigateur et affiche toujours la mission actuelle, y compris après une élimination. Lorsqu’une cible a réalisé l’action, le joueur touche « Ma cible a réussi l’action ! » et les deux participants confirment. La cible est éliminée ; sa mission et sa cible sont transmises au joueur qui l’a attrapée.
 5. Le dernier joueur en jeu gagne. Il n’y a pas de clôture automatique à une heure donnée ni de départage automatique si plusieurs personnes restent en jeu à la fin de la journée.
 
 Le **Coin des grands**, protégé par le code, affiche les missions actives et les joueurs éliminés. Il permet de changer le code, de préparer une nouvelle partie avec les mêmes avatars ou de tout remettre à zéro après confirmation. Il ne faut pas perdre ce code ; il est enregistré en clair dans le stockage local et ne constitue pas une protection de sécurité.
@@ -51,7 +51,7 @@ Un Chrome/Chromium déjà installé peut être utilisé avec `CHROME_PATH=/chemi
 
 Les chemins d’assets sont relatifs : le site fonctionne à la racine d’un domaine ou dans le sous-dossier d’un dépôt GitHub Pages.
 
-1. Mettre ces fichiers dans un dépôt GitHub et les pousser sur la branche `main`.
+1. Mettre ces fichiers dans un dépôt GitHub et les pousser sur la branche `main` ou `master`.
 2. Dans **Settings → Pages → Build and deployment**, choisir **GitHub Actions** comme source.
 3. Le workflow `.github/workflows/pages.yml` vérifie les règles et publie les six fichiers publics. Les tests, les dépendances de développement et les sauvegardes ne sont pas publiés.
 

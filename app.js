@@ -30,11 +30,12 @@ function openModal(html) {
 }
 
 function playerCard(player, action = 'open-player', editable = false) {
-  return `<button class="player-card ${!player.alive && state.phase !== 'setup' ? 'is-out' : ''}" data-action="${action}" data-id="${esc(player.id)}"><span class="player-art" style="--card-color:${esc(player.shirt)}">${avatar(player)}</span><span class="player-name">${esc(player.name)}</span><span class="player-caption">${editable ? 'Modifier mon avatar <span aria-hidden="true">↗</span>' : player.alive ? 'Voir ma mission <span aria-hidden="true">→</span>' : 'Bien joué !'}</span></button>`;
+  return `<button class="player-card ${!player.alive && state.phase !== 'setup' ? 'is-out' : ''}" data-action="${action}" data-id="${esc(player.id)}"><span class="player-art" style="--card-color:${esc(player.shirt)}">${avatar(player)}</span><span class="player-name">${esc(player.name)}</span><span class="player-caption">${editable ? 'Modifier mon avatar <span aria-hidden="true">↗</span>' : player.alive ? '👀 Revoir ma mission <span aria-hidden="true">→</span>' : 'Bien joué !'}</span></button>`;
 }
 
 function render() {
   stopAudio();
+  document.querySelector('#missions-trigger').hidden = loadError || state.phase !== 'playing';
   if (loadError) {
     app.innerHTML = `<section class="center-panel"><span class="eyebrow">La sauvegarde a un souci</span><h1>Une petite pause.</h1><p>Impossible de lire la partie enregistrée. Elle reste conservée dans ce navigateur.</p><button class="button" data-action="export-save">Récupérer la sauvegarde</button><p>Si le stockage est bloqué, autorise-le puis recharge la page. Pour effacer une sauvegarde abîmée, utilise ton code administrateur.</p><button class="button secondary" data-action="recover-reset">Réinitialiser avec le code</button></section>`;
     return;
@@ -70,7 +71,7 @@ function renderPass() {
 }
 
 function renderPlaying() {
-  app.innerHTML = `<section class="game-heading"><span class="eyebrow">À VOUS DE JOUER !</span><h1>Les malins sont<br>dans la <span class="word-highlight">place.</span></h1><p>Choisis ton avatar pour retrouver ta mission.<br>Garde le secret et ouvre l’œil !</p><span class="count-badge">${livePlayers().length} encore en jeu</span></section><section class="crew-section"><div class="player-grid">${livePlayers().map(p => playerCard(p)).join('')}</div>${state.players.some(p => !p.alive) ? `<div class="eliminated"><h3>Ils ont été attrapés</h3><div class="eliminated-list">${state.players.filter(p => !p.alive).map(p => `<span>${avatar(p)} ${esc(p.name)}</span>`).join('')}</div></div>` : ''}</section><p class="local-note">La partie est sauvegardée automatiquement sur ce téléphone.</p>`;
+  app.innerHTML = `<section class="game-heading"><span class="eyebrow">👀 TON PETIT SECRET, À TOUT MOMENT</span><h1>Revoir<br>ma <span class="word-highlight">mission.</span></h1><p>Choisis ton avatar, puis tapote pour revoir ta mission.<br>Tu peux aussi l’écouter avec le bouton 🔊.<br>Un nouveau tap la cache avant de passer le téléphone.</p><span class="count-badge">${livePlayers().length} encore en jeu</span></section><section class="crew-section"><div class="player-grid">${livePlayers().map(p => playerCard(p)).join('')}</div>${state.players.some(p => !p.alive) ? `<div class="eliminated"><h3>Ils ont été attrapés</h3><div class="eliminated-list">${state.players.filter(p => !p.alive).map(p => `<span>${avatar(p)} ${esc(p.name)}</span>`).join('')}</div></div>` : ''}</section><p class="local-note">La partie est sauvegardée automatiquement sur ce téléphone.</p>`;
 }
 
 function renderWinner() {
@@ -204,6 +205,13 @@ document.addEventListener('click', event => {
 
 app.addEventListener('keydown', event => {
   if (event.target.matches('.mission-surface') && ['Enter', ' '].includes(event.key)) { event.preventDefault(); actions.advance(); }
+});
+
+document.querySelector('#missions-trigger').addEventListener('click', () => {
+  if (loadError || state.phase !== 'playing') return;
+  adminUnlocked = false; revealed = false; view = 'home';
+  if (modal.open) modal.close();
+  render(); app.focus();
 });
 
 document.querySelector('#admin-trigger').addEventListener('click', () => {

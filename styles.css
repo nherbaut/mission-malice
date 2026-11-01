@@ -5,3 +5,30 @@
 @media(max-width:850px){.site-header{padding:24px 28px}main{padding:0 28px}.hero{padding:45px 0;grid-template-columns:1.1fr 1fr}.hero-art{height:270px;margin-right:0}.hero h1{font-size:53px}.hero-copy>.eyebrow{font-size:8px;letter-spacing:1.1px}.hero-bubble{font-size:20px;padding:13px 16px}.hero-tags{font-size:9px;gap:8px 12px}.player-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.launch-panel{padding:25px;gap:20px}.launch-panel h2{font-size:23px}.launch-panel .button{padding:15px;font-size:12px;gap:10px}.site-footer{margin:15px 28px 0}.how-grid{gap:18px}.how-grid h3{font-size:17px}.admin-person{min-width:140px}.admin-mission{gap:15px}}
 @media(max-width:600px){.site-header{padding:20px}.brand{font-size:21px}.brand-symbol{width:38px;height:38px;font-size:33px;border-radius:11px}.admin-trigger{font-size:10px;padding:8px 11px;gap:5px}.admin-trigger>span:first-child{font-size:17px}main{padding:0 20px}.hero{display:flex;flex-direction:column;align-items:stretch;padding:35px 0 30px;gap:25px}.hero-copy>.eyebrow{font-size:8px;letter-spacing:1.3px;margin-bottom:18px}.hero h1{font-size:57px;letter-spacing:-2.5px;margin-bottom:22px}.hero-copy>p{font-size:13px}.hero-tags{margin-top:19px;font-size:9px;gap:8px 14px}.hero-art{height:245px;width:300px;max-width:92%;margin:8px auto 0}.hero-person{width:46%;bottom:15px}.hero-two{bottom:0}.hero-bubble{top:-8px;left:27%;font-size:20px;padding:12px 18px}.hero-sticker{font-size:9px;bottom:0}.spark-one{font-size:39px;right:0;top:-2px}.hero-squiggle{width:65px;left:-18px;top:37px}.spark-two{font-size:39px;bottom:5px;left:-7px}.crew-section{padding:27px 0}.section-heading{gap:12px;margin-bottom:22px}.section-heading h2{font-size:26px}.section-heading p{font-size:11px}.section-heading .eyebrow{font-size:9px}.count-badge{font-size:9px;padding:8px 10px}.player-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.player-card{padding:8px;border-radius:14px}.player-art{height:145px}.player-art>.avatar{height:152px}.player-name{font-size:20px;padding:12px 4px 6px}.player-caption{font-size:9px}.add-player{min-height:221px;padding:12px;gap:11px;border-radius:14px}.add-player strong{font-size:12px}.add-player>span:last-child{font-size:9px;line-height:1.5}.launch-panel{flex-direction:column;align-items:stretch;padding:25px 22px;gap:20px;margin-bottom:36px}.launch-panel .button{font-size:13px;gap:25px}.launch-panel h2{font-size:26px}.launch-panel p{font-size:11px}.how-section>.section-heading{align-items:flex-end}.how-section h2{font-size:23px;max-width:210px}.how-section .text-button{font-size:10px;white-space:nowrap}.how-section>.section-heading .eyebrow{font-size:8px;letter-spacing:1px}.how-grid{grid-template-columns:1fr;gap:13px}.how-grid article{display:grid;grid-template-columns:47px 1fr;column-gap:16px;padding:12px 0}.step-icon{grid-row:1/3;width:44px;height:44px;font-size:24px;margin:0}.how-grid h3{font-size:18px;margin-bottom:5px}.how-grid p{font-size:11px;max-width:none;margin:0}.local-note{font-size:10px;line-height:1.7}.site-footer{margin:10px 20px 0;padding:20px 0;gap:10px;flex-wrap:wrap;font-size:9px}.pass-section{margin-top:23px}.pass-top>.eyebrow{font-size:9px;letter-spacing:1px}.reveal-surface{padding:25px 18px;border-radius:22px}.cover-surface{min-height:510px}.cover-avatar{width:210px}.cover-avatar .avatar{height:225px}.cover-surface h1{font-size:43px}.tap-cue{font-size:12px;gap:8px}.mission-art{width:255px;height:230px;margin:20px 0}.scene-person{width:180px;height:204px;left:35px}.mission-surface h1{font-size:30px}.mission-instruction{font-size:18px}.mission-head>.eyebrow{font-size:9px}.target-chip strong{font-size:21px}.target-chip .avatar{width:40px;height:47px}.mission-surface>.tap-cue{font-size:10px}.game-heading{padding:38px 0 30px}.game-heading h1{font-size:44px}.game-heading p{font-size:13px}.admin-section{padding-top:30px}.admin-section>.section-heading{align-items:flex-start}.admin-section h1{font-size:31px}.admin-section .section-heading>.button{padding:10px 12px;min-height:43px;font-size:10px;white-space:nowrap}.admin-mission{gap:12px;flex-wrap:wrap;padding:12px}.admin-person{width:calc(100% - 53px);max-width:none}.admin-mission>div:last-child{padding-left:10px}.admin-person .avatar{width:43px;height:52px}.admin-mission p{font-size:13px}.admin-tools{padding:20px}.admin-tools .button{width:100%;font-size:12px}.admin-tools h2{font-size:25px}dialog{padding:27px 20px;max-height:92dvh;border-radius:20px}dialog h2{font-size:27px;max-width:90%}dialog>.eyebrow{font-size:9px}.editor-layout{grid-template-columns:1fr;gap:22px;margin-top:17px}.avatar-preview{position:static;min-height:170px;flex-direction:row;padding:8px 12px;gap:12px}.avatar-preview .avatar{width:120px;height:155px;flex-shrink:0}.avatar-preview strong{font-size:25px;max-width:50%}.editor-fields{padding:0 2px}.kind-choices .avatar{height:67px}.kind-choices span{font-size:11px}.swatch{width:32px;height:32px}.swatches{gap:12px}.form-actions>.button{flex:1;font-size:12px;padding:13px 16px;gap:10px}.form-actions>.text-button{font-size:11px}.mission-catalog{gap:17px 12px}.mission-catalog>div{gap:9px}.mission-catalog>div>span{width:37px;height:42px;font-size:24px}.mission-catalog strong{font-size:11px}.mission-catalog p{font-size:10px}.winner-section h1{font-size:41px;letter-spacing:-1.5px}.winner-section>p{font-size:13px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Accès aux missions, y compris depuis le Coin des grands. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: 12px;
+}
+.header-actions [hidden] {
+  display: none;
+}
+.missions-trigger {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  min-height: 44px;
+}
+@media (max-width: 600px) {
+  .header-actions {
+    max-width: 190px;
+    gap: 6px;
+  }
+  .header-actions .admin-trigger {
+    min-height: 38px;
+  }
+}
